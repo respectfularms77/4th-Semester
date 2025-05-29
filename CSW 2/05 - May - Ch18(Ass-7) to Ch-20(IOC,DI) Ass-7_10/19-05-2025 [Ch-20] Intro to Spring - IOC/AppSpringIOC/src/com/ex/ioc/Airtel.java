@@ -1,0 +1,12 @@
+package com.ex.ioc;
+
+public class Airtel implements Sim{
+	@Override
+	public void calling() {
+		System.out.println("Calling using Airtel Sim");
+}
+	@Override
+	public void data() {
+		System.out.println("Data using Airtel Sim");
+	}
+}
