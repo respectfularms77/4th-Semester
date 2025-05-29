@@ -1,0 +1,84 @@
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 6		
+;Objective: 1 	 //Find the factorial of a given 8-bit number
+
+AREA FACTORIAL, CODE, READONLY
+	ENTRY
+START
+	MOV R0, #5 ;n
+	MOV R1, #1 ;result
+fact_loop
+	CMP R0, #0
+	BEQ end_loop ; If R0 = 0, branch to end_loop
+	MUL R2, R1, R0
+	MOV R1, R2 ; R1 = R1 * R0
+	SUBS R0, R0, #1 ; R0 = R0 - 1
+	B fact_loop ; Repeat the loop
+end_loop
+	LDR R2, =RESULT ; Store the result in memory
+	STR R1, [R2]
+EXT B EXT
+	AREA RES, DATA, READWRITE
+RESULT DCD 0X0
+END
+
+; 	C-CODE FOR FACTORIAL
+;if (n == 0) {
+; return 1;
+; }
+; return n * factorial(n - 1);
+; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 6		
+;Objective: 2 	 //Find the Fibonacci Series up to n digits (8-bit number).
+
+AREA fibnacci, CODE, READONLY
+	ENTRY
+START
+	MOV R1, #01
+	MOV R2, #00
+	MOV R3, #00
+	LDR R0, =COUNT
+	LDR R6, =FIB_SERIES
+	LDRB R5, [R0]
+	CMP R5, #1
+	BLE STOP1
+	STRB R2, [R6], #01
+	SUBS R5, R5, #01
+	STRB R1,[R6],#01
+BACK
+	SUBS R5,R5,#01
+	BEQ STOP
+	ADD R3,R1,R2
+	STRB R3,[R6],#01
+	MOV R2,R1
+	MOV R1,R3
+	B BACK
+STOP1 STRB R3,[R6]
+STOP B STOP
+COUNT DCB 0X0A ; N =10
+	AREA DATA1, DATA, READWRITE
+FIB_SERIES DCB 0X0,0X0,0X0,0X0,0X0,0X0,0X0,0X0,0X0,0X0
+END

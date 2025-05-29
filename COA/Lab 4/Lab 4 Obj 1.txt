@@ -1,0 +1,14 @@
+.global _start
+_start:
+
+//Name - Arpit Kumar Mohanty
+//Registration Number - 2341013237
+//Lab: 4
+//Objective: 1   //Perform Addition and Subtraction of two 32-bit numbers using data processing addressing mode (with immediate data).
+
+MOV R0, #0x40		 	//1st Number is 40
+MOV R1, #0x50			//2nd Number is 50
+ADDS R2,R0,#0x50		//Stored the Added Result in R2
+SUBS R3,R0,#0x50		//Stores the Negative Number in 2s Complement Form
+MUL R4,R0,R1			//R1 and R0 is multiplied and Stored in R4
+my_exit: b my_exit

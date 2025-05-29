@@ -1,0 +1,85 @@
+;Lab 1	Obj - 1 //Perform Addition, Subtraction, Multiplication, and Division of two 16-bit numbers
+;using immediate addressing mode and store the results using direct addressing mode.
+
+MOV AX,0000H
+MOV DS,AX
+MOV AX,5225H
+MOV CX,AX
+ADD AX,4324H
+MOV [5000H],AX
+MOV AX,CX
+SUB AX,4324H
+MOV [5002H],AX
+MOV AX,CX
+MOV BX,4324H
+MUL BX
+MOV [5004H],AX
+MOV [5006H],DX
+MOV DX,0000H
+MOV AX,CX
+DIV BX
+MOV [5008H],AX
+MOV [500AH],DX
+HLT
+
+
+
+
+
+;Lab 1
+;Obj – 2   //Perform the following operations on two 8-bit data (data1, data2) given in memory
+;locations and store the result in another memory location using indirect addressing mode.
+;i. Swapping of nibble of data1
+;ii. 𝑌= (data1 and data2) or (data1 xor data2)
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,2000H
+MOV AL,[SI]
+MOV CL,AL
+INC SI
+MOV BL,[SI]
+MOV DL,AL
+SHR AL,04H
+SHL DL,04H
+OR AL,DL
+INC SI
+MOV [SI],AL
+AND AL,CL
+AND AL,BL
+XOR CL,BL
+OR AL,CL
+INC SI
+MOV [SI],AL
+HLT
+
+
+;Lab 1
+;Obj - 3   //Find the Gray code of an 8-bit binary number.
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,2000H
+MOV AL,[SI]
+MOV CL,AL
+SHR AL,01H
+XOR AL,CL
+INC SI
+MOV [SI],AL
+HLT
+
+
+
+
+;Lab 1
+;Obj - 4   //Find the 2’s complement of an 8-bit number. 
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,3000H
+MOV AL,[SI]
+NOT AL
+ADD AL,01H
+INC SI
+MOV [SI],AL
+HLT

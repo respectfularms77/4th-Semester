@@ -1,0 +1,818 @@
+;Lab 1	Obj - 1 //Perform Addition, Subtraction, Multiplication, and Division of two 16-bit numbers
+;using immediate addressing mode and store the results using direct addressing mode.
+
+MOV AX,0000H
+MOV DS,AX
+MOV AX,5225H
+MOV CX,AX
+ADD AX,4324H
+MOV [5000H],AX
+MOV AX,CX
+SUB AX,4324H
+MOV [5002H],AX
+MOV AX,CX
+MOV BX,4324H
+MUL BX
+MOV [5004H],AX
+MOV [5006H],DX
+MOV DX,0000H
+MOV AX,CX
+DIV BX
+MOV [5008H],AX
+MOV [500AH],DX
+HLT
+
+
+
+
+
+;Lab 1
+;Obj – 2   //Perform the following operations on two 8-bit data (data1, data2) given in memory
+;locations and store the result in another memory location using indirect addressing mode.
+;i. Swapping of nibble of data1
+;ii. 𝑌= (data1 and data2) or (data1 xor data2)
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,2000H
+MOV AL,[SI]
+MOV CL,AL
+INC SI
+MOV BL,[SI]
+MOV DL,AL
+SHR AL,04H
+SHL DL,04H
+OR AL,DL
+INC SI
+MOV [SI],AL
+AND AL,CL
+AND AL,BL
+XOR CL,BL
+OR AL,CL
+INC SI
+MOV [SI],AL
+HLT
+
+
+;Lab 1
+;Obj - 3   //Find the Gray code of an 8-bit binary number.
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,2000H
+MOV AL,[SI]
+MOV CL,AL
+SHR AL,01H
+XOR AL,CL
+INC SI
+MOV [SI],AL
+HLT
+
+
+
+
+;Lab 1
+;Obj - 4   //Find the 2’s complement of an 8-bit number. 
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,3000H
+MOV AL,[SI]
+NOT AL
+ADD AL,01H
+INC SI
+MOV [SI],AL
+HLT
+
+
+
+
+===============================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+; Name: Arpit Kumar Mohanty
+; Registration Number: 2341013237
+; Section: 23412G1
+; Lab 2 Objective - 1   //MULTIPLICATION OF TWO 16 BIT NUMBER WITHOUT USING MUL INSTRUCTION IN DIRECT ADDRESSING MODE
+
+MOV AX, 0000H
+MOV DS, AX
+MOV SI, 4000H
+MOV CX, [SI]
+INC SI
+INC SI
+MOV BX, [SI]
+MOV DX, 0000H  
+MOV AX, 0000H
+
+L2: ADD AX, [SI]
+JNC L1
+INC DX
+
+L1: DEC CL
+JNZ L2
+INC SI
+INC SI
+MOV [SI], AX
+INC SI
+INC SI
+MOV [SI], DX
+HLT
+
+
+
+
+
+
+
+
+; Name: Arpit Kumar Mohanty
+; Registration Number: 2341013237
+; Section: 23412G1
+; Lab 2 Objective - 2 //Find the Sum & Average of a 16 Bit Number
+
+MOV AX, 0000H
+MOV DS, AX
+MOV SI, 4000H
+MOV CL,[SI]
+MOV CH, 00H
+MOV BX, CX
+MOV DX, 0000H
+MOV AX, 0000H
+L2: INC SI
+INC SI
+ADD AX, [SI]
+JNC L1
+INC DX
+L1: DEC CL
+JNZ L2
+INC SI
+INC SI
+MOV [SI], AX
+INC SI
+INC SI
+MOV [SI], DX
+DIV BX
+INC SI
+INC SI
+MOV [SI], AX
+INC SI
+INC SI
+MOV [SI], DX
+HLT
+
+
+
+
+
+
+
+
+
+;Name - Arpit Kumar Mohanty
+;Registration Number - 2341013237  
+; Section: 23412G1
+; Lab 2 Objective - 3   //Count no. of 0’s in an 8-bit number.
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI, 2000H
+MOV AL, [BX]
+MOV CL, 08H
+MOV BL, 00H
+L2: SHR AL,01H
+JC L1
+INC BL
+L1: DEC CL
+JNZ L2 
+INC SI
+MOV [SI], BL
+HLT
+
+
+
+
+
+
+
+
+
+
+; Name: Arpit Kumar Mohanty
+; Registration Number: 2341013237
+; Section: 23412G1
+; Lab 2 Objective - 4 //MOVE A BLOCK OF 16 BIT DATA FROM ONE LOCATION TO ANOTHER.
+
+MOV AX,2000H
+MOV DS,AX
+MOV SI,4000H
+MOV DI,5000H
+MOV CL,03H
+L1: MOV BX,[SI]
+MOV [DI],BX
+INC SI
+INC SI
+INC DI
+INC DI
+DEC CL
+JNZ L1
+HLT 
+
+
+
+
+
+
+
+===============================================================================================================================================
+
+
+
+
+
+
+
+
+   
+
+;Name - Arpit Kumar Mohanty
+;Registration Number - 2341013237
+;Lab - 3
+;Obj - 1(a) // Find the Largest number(8-bit) from the given array of size n
+
+.data
+count db 04h                ; count = array size (N = 4)
+value db 12h,0ch,05h,15h    ; array elements
+res db ?                    ; variable to store the result
+
+.code
+MAIN PROC
+ mov ax, data              ; AX <- address of data segment
+ mov ds, ax                ; DS <- AX (initialize DS with data segment address)
+ mov cl, count             ; CL <- count (load array size)
+ dec cl                    ; CL <- CL - 1 (since first element is preloaded)
+ LEA SI, value             ; SI <- offset of value (point to start of array)
+ mov al, [SI]              ; AL <- value[0] (assume first element is max)
+
+up: inc si                 ; SI <- SI + 1 (point to next element)
+ cmp al, [si]              ; Compare AL with value[SI]
+ jnc nxt                   ; If AL >= value[SI], jump to nxt
+ ; jnl nxt                 ; (alternative: jump if not less)
+ mov al, [si]              ; AL <- value[SI] (new max found)
+
+nxt: dec cl                ; CL <- CL - 1 (decrease loop counter)
+ jnz up                   ; If CL != 0, jump to up (repeat loop)
+
+ LEA DI, res              ; DI <- offset of res
+ mov [DI], al             ; res <- AL (store max value in res)
+
+END MAIN                 ; End of program
+
+
+
+
+
+
+
+
+
+
+
+;Name - Arpit Kumar Mohanty
+;Registration Number - 2341013237
+;Lab - 3
+;Obj - 1(b) // Find the Smallest number(8-bit) from the given array of size n
+
+.data
+count db 04h                ; count = array size (N = 4)
+value db 12h,0ch,05h,15h    ; array elements
+res db ?                    ; variable to store the result
+
+.code
+MAIN PROC
+ mov ax, data              ; AX <- address of data segment
+ mov ds, ax                ; DS <- AX (initialize DS with data segment address)
+ mov cl, count             ; CL <- count (load array size)
+ dec cl                    ; CL <- CL - 1 (since first element is preloaded)
+ LEA SI, value             ; SI <- offset of value (point to start of array)
+ mov al, [SI]              ; AL <- value[0] (assume first element is max)
+
+up: inc si                 ; SI <- SI + 1 (point to next element)
+ cmp al, [si]              ; Compare AL with value[SI]
+ jc nxt                    ; If AL >= value[SI], jump to nxt
+ ; jnl nxt                 ; (alternative: jump if not less)
+ mov al, [si]              ; AL <- value[SI] (new max found)
+
+nxt: dec cl                ; CL <- CL - 1 (decrease loop counter)
+ jnz up                   ; If CL != 0, jump to up (repeat loop)
+
+ LEA DI, res              ; DI <- offset of res
+ mov [DI], al             ; res <- AL (store max value in res)
+
+END MAIN                 ; End of program
+
+
+
+
+
+
+
+
+
+
+
+
+; NAME - ARPIT KUMAR MOHANTY
+; REGISTRATION NUMBER: 2341013237
+; LAB 3
+; OBJ 2(a) [ARRANGE THE ELEMENTS OF AN GIVEN ARRAY OF SIZE N IN ASCENDING ORDER]
+
+.DATA
+count DB 06
+value DB 0FH,09H,14H,45H,3FH,24H
+.CODE
+MAIN PROC
+    MOV AX, DATA
+    MOV DS, AX
+    LEA DI, count
+    MOV CH, [DI]
+    DEC CH
+UP2: MOV CL,CH
+     LEA SI, value
+UP1: MOV AL, [SI]
+     CMP AL, [SI+1]
+     JC DOWN
+     MOV DL, [SI+1]
+     XCHG [SI], DL
+     MOV [SI+1], DL
+DOWN: INC SI
+      DEC CL
+      JNZ UP1
+      DEC CH
+      JNZ UP2
+      
+      END MAIN
+
+
+
+
+
+
+
+
+
+
+
+
+; NAME: ARPIT KUMAR MOHANTY
+; REGISTRATION NUMBER: 2341013237
+; LAB 3
+; OBJ 2(b) [ARRANGE THE ELEMENTS OF AN GIVEN ARRAY OF SIZE N IN DECENDING ORDER]
+
+.DATA
+count DB 06
+value DB 0FH,09H,14H,45H,3FH,24H
+.CODE
+MAIN PROC
+    MOV AX, DATA
+    MOV DS, AX
+    LEA DI, count
+    MOV CH, [DI]
+    DEC CH
+UP2: MOV CL,CH
+     LEA SI, value
+UP1: MOV AL, [SI]
+     CMP AL, [SI+1]
+     JNC DOWN
+     MOV DL, [SI+1]
+     XCHG [SI], DL
+     MOV [SI+1], DL
+DOWN: INC SI
+      DEC CL
+      JNZ UP1
+      DEC CH
+      JNZ UP2
+      
+      END MAIN
+
+
+
+
+
+
+
+===============================================================================================================================================
+
+
+
+
+
+
+
+
+.global _start
+_start:
+
+//Name - Arpit Kumar Mohanty
+//Registration Number - 2341013237
+//Lab: 4
+//Objective: 1   //Perform Addition and Subtraction of two 32-bit numbers using data processing addressing mode (with immediate data).
+
+MOV R0, #0x40		 	//1st Number is 40
+MOV R1, #0x50			//2nd Number is 50
+ADDS R2,R0,#0x50		//Stored the Added Result in R2
+SUBS R3,R0,#0x50		//Stores the Negative Number in 2s Complement Form
+MUL R4,R0,R1			//R1 and R0 is multiplied and Stored in R4
+my_exit: b my_exit
+.global _start
+_start:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Name: Arpit Kumar Mohanty
+//Registration Number: 2341013237
+//Lab: 4
+//Objective: 2		//Perform Addition, Subtraction, and Multiplication of two 32-bit numbers using load/store addressing mode.
+
+LDR R0, =0x10100000
+LDR R1, [R0], #4
+LDR R2, [R0], #4
+ADDS R3, R1, R2
+STR R3, [R0], #4
+SUBS R4, R1, R2
+STR R4, [R0], #4
+MUL R5, R1, R2
+STR R5, [R0]
+my_exit: b my_exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.global _start
+_start:
+
+//Name: Arpit Kumar Mohanty
+//Registration Number: 2341013237
+//Lab: 4
+//Objective: 3		//Perform the logical operations (AND, OR, XOR, and NOT) on two 32-bit numbers using load/store addressing mode.
+
+LDR R0, =0x10100000
+LDR R1, [R0], #4
+LDR R2, [R0], #4
+AND R3, R1, R2
+STR R3, [R0], #4
+ORR R4, R1, R2
+STR R4, [R0], #4
+EOR R5, R1, R2
+STR R5, [R0], #4
+MVN R6, R1
+STR R6, [R0]
+my_exit: b my_exit
+
+
+
+
+
+
+
+
+
+
+===============================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 5		
+;Objective: 1 	//Find the largest number in each array of size N
+
+	AREA PROG1, CODE,READONLY 
+	ENTRY 
+START 
+	;Largest number from a given array 
+	ldr r0,=count 
+	ldr r1,[r0] 
+	ldr r2,=array 
+	ldr r3, [r2],#4 
+back 
+	subs r1,r1,#01 
+	beq fwd 
+	ldr r4,[r2],#4 
+	cmp r3,r4 
+	bgt back 
+	mov r3,r4 
+	b back 
+fwd  
+  ldr r5,=LARGEST 
+	str r3,[r5] 
+exit b exit  
+count DCD 0x07 
+array  
+		DCD 0x15 ; DCD= Define Constant Double-words(32-bit)   
+		DCD 0x35 ; DCD directive allocates one or more words of memory, aligned  
+					; on 4-byte boundaries 
+		DCD 0x32 
+		DCD 0x45 
+		DCD 0x10 
+		DCD 0x4f 
+		DCD 0x34 
+	AREA DATA2,DATA,READWRITE ; TO STORE RESULT IN GIVEN ADDRESS 
+LARGEST  DCD 0X0 
+	END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 5     
+;Objective: 2	//Find the smallest number in each array of size N
+
+    AREA PROG1, CODE,READONLY 
+    ENTRY 
+START 
+    ;Smallest number from a given array 
+    ldr r0,=count 
+    ldr r1,[r0] 
+    ldr r2,=array 
+    ldr r3, [r2],#4     ; Load first element into r3 as initial smallest
+
+back 
+    subs r1,r1,#01      ; Decrement count
+    beq fwd             ; If count is 0, branch to fwd
+    ldr r4,[r2],#4      ; Load next element into r4
+    cmp r3,r4           ; Compare current smallest (r3) with new value (r4)
+    blt back            ; If r3 < r4, keep current smallest
+    mov r3,r4           ; Else, update smallest
+    b back              ; Repeat
+
+fwd  
+    ldr r5,=LARGEST     ; Final result storage address
+    str r3,[r5]         ; Store the smallest value in memory
+exit 
+    b exit              ; Infinite loop (end)
+
+count DCD 0x07 
+array  
+    DCD 0x15  ;	DCD= Define Constant Double-words(32-bit)   
+    DCD 0x35  ; DCD directive allocates one or more words of memory, aligned  
+			; on 4-byte boundaries
+    DCD 0x32 
+    DCD 0x45 
+    DCD 0x10 
+    DCD 0x4f 
+    DCD 0x34 
+
+    AREA DATA2,DATA,READWRITE 
+LARGEST  DCD 0X0 
+    END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 5     
+;Objective: 3	//Separate Even numbers and odds numbers in an array of size N
+
+AREA prog2, CODE, READONLY
+	ENTRY 	;Mark first instruction to execute
+START
+	ldr r0,=count
+	ldr r1,[r0]
+	ldr r3,=array ; r3 = base address of array=array[0]
+	ldr r4,=even  ; r4=base address of even data locations as constant = even[0]
+											; = 0x40000000
+	ldr r5,=odd ; r5=base address of odd data locations as constant = odd[0]
+											; = 0x4000001c
+back
+	ldr r6, [r3],#4
+	ands r7,r6,#1
+	beq fwd
+	str r6,[r5],#4
+	b fwd1
+fwd
+	str r6,[r4],#4
+fwd1
+	subs r1,r1,#01
+	bne back
+
+exit b exit
+; Array declaration
+count DCD 0x07
+array
+		DCD 0x15
+		DCD 0x35
+		DCD 0x32
+		DCD 0x45
+		DCD 0x10
+		DCD 0x4f
+		DCD 0x34
+	AREA DATA2,DATA,READWRITE ; TO STORE RESULT IN GIVEN ADDRESS
+even
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+odd
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	DCD 0X0
+	END
+
+
+
+
+
+
+
+
+
+===============================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 6		
+;Objective: 1 	 //Find the factorial of a given 8-bit number
+
+AREA FACTORIAL, CODE, READONLY
+	ENTRY
+START
+	MOV R0, #5 ;n
+	MOV R1, #1 ;result
+fact_loop
+	CMP R0, #0
+	BEQ end_loop ; If R0 = 0, branch to end_loop
+	MUL R2, R1, R0
+	MOV R1, R2 ; R1 = R1 * R0
+	SUBS R0, R0, #1 ; R0 = R0 - 1
+	B fact_loop ; Repeat the loop
+end_loop
+	LDR R2, =RESULT ; Store the result in memory
+	STR R1, [R2]
+EXT B EXT
+	AREA RES, DATA, READWRITE
+RESULT DCD 0X0
+END
+
+; 	C-CODE FOR FACTORIAL
+;if (n == 0) {
+; return 1;
+; }
+; return n * factorial(n - 1);
+; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;Name: Arpit Kumar Mohanty
+;Registration Number: 2341013237
+;Lab: 6		
+;Objective: 2 	 //Find the Fibonacci Series up to n digits (8-bit number).
+
+AREA fibnacci, CODE, READONLY
+	ENTRY
+START
+	MOV R1, #01
+	MOV R2, #00
+	MOV R3, #00
+	LDR R0, =COUNT
+	LDR R6, =FIB_SERIES
+	LDRB R5, [R0]
+	CMP R5, #1
+	BLE STOP1
+	STRB R2, [R6], #01
+	SUBS R5, R5, #01
+	STRB R1,[R6],#01
+BACK
+	SUBS R5,R5,#01
+	BEQ STOP
+	ADD R3,R1,R2
+	STRB R3,[R6],#01
+	MOV R2,R1
+	MOV R1,R3
+	B BACK
+STOP1 STRB R3,[R6]
+STOP B STOP
+COUNT DCB 0X0A ; N =10
+	AREA DATA1, DATA, READWRITE
+FIB_SERIES DCB 0X0,0X0,0X0,0X0,0X0,0X0,0X0,0X0,0X0,0X0
+END
+

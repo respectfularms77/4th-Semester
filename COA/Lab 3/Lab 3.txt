@@ -1,0 +1,159 @@
+;Name - Arpit Kumar Mohanty
+;Registration Number - 2341013237
+;Lab - 3
+;Obj - 1(a) // Find the Largest number(8-bit) from the given array of size n
+
+.data
+count db 04h                ; count = array size (N = 4)
+value db 12h,0ch,05h,15h    ; array elements
+res db ?                    ; variable to store the result
+
+.code
+MAIN PROC
+ mov ax, data              ; AX <- address of data segment
+ mov ds, ax                ; DS <- AX (initialize DS with data segment address)
+ mov cl, count             ; CL <- count (load array size)
+ dec cl                    ; CL <- CL - 1 (since first element is preloaded)
+ LEA SI, value             ; SI <- offset of value (point to start of array)
+ mov al, [SI]              ; AL <- value[0] (assume first element is max)
+
+up: inc si                 ; SI <- SI + 1 (point to next element)
+ cmp al, [si]              ; Compare AL with value[SI]
+ jnc nxt                   ; If AL >= value[SI], jump to nxt
+ ; jnl nxt                 ; (alternative: jump if not less)
+ mov al, [si]              ; AL <- value[SI] (new max found)
+
+nxt: dec cl                ; CL <- CL - 1 (decrease loop counter)
+ jnz up                   ; If CL != 0, jump to up (repeat loop)
+
+ LEA DI, res              ; DI <- offset of res
+ mov [DI], al             ; res <- AL (store max value in res)
+
+END MAIN                 ; End of program
+
+
+
+
+
+
+
+
+
+
+
+;Name - Arpit Kumar Mohanty
+;Registration Number - 2341013237
+;Lab - 3
+;Obj - 1(b) // Find the Smallest number(8-bit) from the given array of size n
+
+.data
+count db 04h                ; count = array size (N = 4)
+value db 12h,0ch,05h,15h    ; array elements
+res db ?                    ; variable to store the result
+
+.code
+MAIN PROC
+ mov ax, data              ; AX <- address of data segment
+ mov ds, ax                ; DS <- AX (initialize DS with data segment address)
+ mov cl, count             ; CL <- count (load array size)
+ dec cl                    ; CL <- CL - 1 (since first element is preloaded)
+ LEA SI, value             ; SI <- offset of value (point to start of array)
+ mov al, [SI]              ; AL <- value[0] (assume first element is max)
+
+up: inc si                 ; SI <- SI + 1 (point to next element)
+ cmp al, [si]              ; Compare AL with value[SI]
+ jc nxt                    ; If AL >= value[SI], jump to nxt
+ ; jnl nxt                 ; (alternative: jump if not less)
+ mov al, [si]              ; AL <- value[SI] (new max found)
+
+nxt: dec cl                ; CL <- CL - 1 (decrease loop counter)
+ jnz up                   ; If CL != 0, jump to up (repeat loop)
+
+ LEA DI, res              ; DI <- offset of res
+ mov [DI], al             ; res <- AL (store max value in res)
+
+END MAIN                 ; End of program
+
+
+
+
+
+
+
+
+
+
+
+
+; NAME - ARPIT KUMAR MOHANTY
+; REGISTRATION NUMBER: 2341013237
+; LAB 3
+; OBJ 2(a) [ARRANGE THE ELEMENTS OF AN GIVEN ARRAY OF SIZE N IN ASCENDING ORDER]
+
+.DATA
+count DB 06
+value DB 0FH,09H,14H,45H,3FH,24H
+.CODE
+MAIN PROC
+    MOV AX, DATA
+    MOV DS, AX
+    LEA DI, count
+    MOV CH, [DI]
+    DEC CH
+UP2: MOV CL,CH
+     LEA SI, value
+UP1: MOV AL, [SI]
+     CMP AL, [SI+1]
+     JC DOWN
+     MOV DL, [SI+1]
+     XCHG [SI], DL
+     MOV [SI+1], DL
+DOWN: INC SI
+      DEC CL
+      JNZ UP1
+      DEC CH
+      JNZ UP2
+      
+      END MAIN
+
+
+
+
+
+
+
+
+
+
+
+
+; NAME: ARPIT KUMAR MOHANTY
+; REGISTRATION NUMBER: 2341013237
+; LAB 3
+; OBJ 2(b) [ARRANGE THE ELEMENTS OF AN GIVEN ARRAY OF SIZE N IN DECENDING ORDER]
+
+.DATA
+count DB 06
+value DB 0FH,09H,14H,45H,3FH,24H
+.CODE
+MAIN PROC
+    MOV AX, DATA
+    MOV DS, AX
+    LEA DI, count
+    MOV CH, [DI]
+    DEC CH
+UP2: MOV CL,CH
+     LEA SI, value
+UP1: MOV AL, [SI]
+     CMP AL, [SI+1]
+     JNC DOWN
+     MOV DL, [SI+1]
+     XCHG [SI], DL
+     MOV [SI+1], DL
+DOWN: INC SI
+      DEC CL
+      JNZ UP1
+      DEC CH
+      JNZ UP2
+      
+      END MAIN

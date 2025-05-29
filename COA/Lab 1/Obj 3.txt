@@ -1,0 +1,15 @@
+;Name – Arpit Kumar Mohanty
+;Registration Number – 2341013237
+;Lab 1
+;Obj - 3   //Find the Gray code of an 8-bit binary number.
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,2000H
+MOV AL,[SI]
+MOV CL,AL
+SHR AL,01H
+XOR AL,CL
+INC SI
+MOV [SI],AL
+HLT

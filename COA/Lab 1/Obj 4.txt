@@ -1,0 +1,14 @@
+;Name – Arpit Kumar Mohanty
+;Registration Number – 2341013237
+;Lab 1
+;Obj - 4   //Find the 2’s complement of an 8-bit number. 
+
+MOV AX,0000H
+MOV DS,AX
+MOV SI,3000H
+MOV AL,[SI]
+NOT AL
+ADD AL,01H
+INC SI
+MOV [SI],AL
+HLT

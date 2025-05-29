@@ -1,0 +1,18 @@
+.global _start
+_start:
+
+//Name: Arpit Kumar Mohanty
+//Registration Number: 2341013237
+//Lab: 4
+//Objective: 2		//Perform Addition, Subtraction, and Multiplication of two 32-bit numbers using load/store addressing mode.
+
+LDR R0, =0x10100000
+LDR R1, [R0], #4
+LDR R2, [R0], #4
+ADDS R3, R1, R2
+STR R3, [R0], #4
+SUBS R4, R1, R2
+STR R4, [R0], #4
+MUL R5, R1, R2
+STR R5, [R0]
+my_exit: b my_exit
